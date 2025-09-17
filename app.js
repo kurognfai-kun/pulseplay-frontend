@@ -1,22 +1,33 @@
 // Replace with your Render backend URL
 const BACKEND_URL = "https://pulseplay-backend.onrender.com";
 
-// Spinner
-function showSpinner(containerId) {
+// Show glowing loading cards
+function showLoadingCards(containerId, count = 3) {
   const container = document.getElementById(containerId);
-  container.innerHTML = '<div class="spinner"></div>';
+  container.innerHTML = "";
+  for (let i = 0; i < count; i++) {
+    const card = document.createElement("div");
+    card.className = "card loading-card";
+    card.innerHTML = `
+      <div class="loader-box"></div>
+      <h3>Loading...</h3>
+      <p>Loading viewers...</p>
+      <div class="watch-btn">⚡</div>
+    `;
+    container.appendChild(card);
+  }
 }
 
-// Render cards
+// Render actual cards
 function renderCards(containerId, cards) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
   cards.forEach(card => container.appendChild(card));
 }
 
-// Twitch fetch
+// Fetch Twitch
 async function loadTwitch() {
-  showSpinner("twitch-container");
+  showLoadingCards("twitch-container", 5);
   try {
     const res = await fetch(`${BACKEND_URL}/api/twitch`);
     const data = await res.json();
@@ -43,9 +54,9 @@ async function loadTwitch() {
   }
 }
 
-// YouTube fetch
+// Fetch YouTube
 async function loadYouTube() {
-  showSpinner("youtube-container");
+  showLoadingCards("youtube-container", 5);
   try {
     const res = await fetch(`${BACKEND_URL}/api/youtube`);
     const data = await res.json();
