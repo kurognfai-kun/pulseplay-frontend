@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Razer Kraken V3 Gaming Headset",
+    "desc": "Immersive surround sound and crystal-clear mic quality, perfect for both competitive and casual gamers.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_1"
+  },
+  {
+    "title": "Logitech G502 Hero Mouse",
+    "desc": "High-performance gaming mouse with customizable DPI and weights for precision gameplay.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_2"
+  },
+  {
+    "title": "Corsair K95 RGB Platinum Keyboard",
+    "desc": "Mechanical keyboard with dynamic RGB lighting and programmable keys for ultimate control.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_3"
+  },
+  {
+    "title": "Secretlab Titan Evo Chair",
+    "desc": "Ergonomic comfort designed for marathon gaming sessions.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_4"
+  },
+  {
+    "title": "Humble Bundle RPG Pack",
+    "desc": "A massive pack of RPG classics at a fraction of the cost.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_5"
+  },
+  {
+    "title": "Elgato Stream Deck MK.2",
+    "desc": "Control your stream, apps, and music with one tap. Essential for Twitch and YouTube streamers.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_6"
+  },
+  {
+    "title": "Blue Yeti USB Microphone",
+    "desc": "Professional-grade mic for streaming, podcasting, and voiceovers.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_7"
+  },
+  {
+    "title": "AOC 24-inch 144Hz Gaming Monitor",
+    "desc": "Smooth visuals with ultra-fast refresh rate, perfect for FPS and esports.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_8"
+  },
+  {
+    "title": "Humble Choice Subscription",
+    "desc": "Monthly curated games for PC gamers. Great value for discovering new titles.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_9"
+  },
+  {
+    "title": "Xbox Game Pass Ultimate",
+    "desc": "Access hundreds of games on console and PC, plus online multiplayer.",
+    "img": "https://via.placeholder.com/300x200",
+    "link": "YOUR_AFFILIATE_LINK_10"
+  }
+]

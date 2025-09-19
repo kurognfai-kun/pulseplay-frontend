@@ -160,3 +160,196 @@ footer {
 @media (max-width: 600px) {
   .card { width: 90%; }
 }
+
+/* Card hover effect */
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #00fff7, 0 0 60px #00b3b3 inset;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Image hover zoom */
+.card img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+  border-radius: 8px;
+}
+.card:hover img {
+  transform: scale(1.08);
+  filter: brightness(1.2);
+}
+
+/* Badge glow on hover */
+.card:hover .badge.live {
+  box-shadow: 0 0 12px #ff3c00, 0 0 24px #ff9500, 0 0 40px #ff3c00 inset;
+}
+
+.card:hover .badge.trending {
+  box-shadow: 0 0 12px #00fff7, 0 0 24px #00b3b3, 0 0 40px #00b3b3 inset;
+}
+
+/* Watch button pop on hover */
+.card:hover .watch-btn {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #ff9500, 0 0 50px #ff3c00;
+}
+
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+.badge.live {
+  background: linear-gradient(90deg, #ff3c00, #ff9500);
+  box-shadow: 0 0 6px #ff3c00, 0 0 12px #ff9500;
+}
+
+.badge.trending {
+  background: linear-gradient(90deg, #00fff7, #00b3b3);
+  box-shadow: 0 0 6px #00fff7, 0 0 12px #00b3b3;
+}
+
+/* Ensure card position relative for badges */
+.card {
+  position: relative;
+}
+
+/* ===== Affiliate Section Styles ===== */
+.affiliate-featured,
+.affiliate-deals,
+.affiliate-picks {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: #111;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.3);
+}
+
+.affiliate-featured h2,
+.affiliate-deals h2,
+.affiliate-picks h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  color: #39ff14; /* neon green */
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.8);
+}
+
+.affiliate-card {
+  background: #111;
+  border: 2px solid #00ffea;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 10px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0,255,234,0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.affiliate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0,255,234,0.8);
+}
+
+.affiliate-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.affiliate-info h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.affiliate-info p {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.affiliate-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #00ffea;
+  color: #111;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+}
+
+.affiliate-btn:hover {
+  background: #00c2a7;
+}
+
+.affiliate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.last-updated {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-top: 10px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.discord-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #7289da;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.discord-btn:hover {
+  background: #5b6eae;
+}
+
+/* Add to styles.css */
+.discord-cta {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.discord-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 25px;
+  background-color: #7289da;
+  color: white;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 0 8px #7289da, 0 0 15px #7289da inset;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.discord-btn:hover {
+  background-color: #5b6eae;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #7289da, 0 0 25px #7289da inset;
+}
+
+.discord-icon {
+  width: 24px;
+  height: 24px;
+}
