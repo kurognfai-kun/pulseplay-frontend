@@ -1,6 +1,7 @@
-const BACKEND_URL = "https://pulseplay-backend-ljyq.onrender.com";
+/* ===== BACKEND URL ===== */
+const BACKEND_URL = ""; // Set your backend URL if needed
 
-// ===== Helper Functions =====
+/* ===== HELPER FUNCTIONS ===== */
 function createBadge(type) {
   const badge = document.createElement("span");
   badge.classList.add("badge");
@@ -14,7 +15,6 @@ function createCard({ title, thumbnail, url, live = false, badgeType }) {
   const card = document.createElement("div");
   card.classList.add("card");
   if (live) card.classList.add("live");
-
   if (badgeType) card.appendChild(createBadge(badgeType));
 
   const link = document.createElement("a");
@@ -37,7 +37,39 @@ function createCard({ title, thumbnail, url, live = false, badgeType }) {
   return card;
 }
 
-// ===== Twitch =====
+/* ===== AFFILIATE ROTATION ===== */
+async function loadAffiliateDeals() {
+  const res = await fetch("affiliates.json"); // your local JSON file
+  const deals = await res.json();
+  const container = document.querySelector(".affiliates");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const week = new Date().getWeek();
+  const deal = deals[week % deals.length];
+
+  const card = document.createElement("section");
+  card.classList.add("affiliate-card");
+  card.innerHTML = `
+    <img src="${deal.image}" alt="${deal.name}" style="max-width:150px;">
+    <h2>${deal.name}</h2>
+    <p>${deal.description}</p>
+    <img class="affiliate-banner" src="${deal.banner}" alt="${deal.name}">
+    <a href="${deal.link}" target="_blank" class="neon-btn">Shop ${deal.name}</a>
+  `;
+  container.appendChild(card);
+}
+
+// Week number helper
+Date.prototype.getWeek = function() {
+  const d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+};
+
+/* ===== TWITCH ===== */
 async function loadTwitch() {
   const container = document.getElementById("twitch-container");
   if (!container) return;
@@ -66,11 +98,11 @@ async function loadTwitch() {
 
 // Auto-refresh Twitch every 60s
 function autoRefreshTwitch(interval = 60000) {
-  loadTwitch(); // Initial load
+  loadTwitch();
   setInterval(loadTwitch, interval);
 }
 
-// ===== YouTube =====
+/* ===== YOUTUBE CAROUSEL ===== */
 let youtubeVideos = [];
 let currentIndex = 0;
 
@@ -83,37 +115,31 @@ async function rotateYouTube() {
     youtubeVideos = await res.json();
     if (youtubeVideos.length === 0) return;
 
-    // Show first video
     container.innerHTML = "";
-    container.appendChild(
-      createCard({
-        title: youtubeVideos[0].title,
-        thumbnail: youtubeVideos[0].thumbnail,
-        url: youtubeVideos[0].url,
-        badgeType: "trending"
-      })
-    );
+    container.appendChild(createCard({
+      title: youtubeVideos[0].title,
+      thumbnail: youtubeVideos[0].thumbnail,
+      url: youtubeVideos[0].url,
+      badgeType: "trending"
+    }));
 
-    // Rotate every 10 seconds
     setInterval(() => {
       currentIndex = (currentIndex + 1) % youtubeVideos.length;
       container.innerHTML = "";
-      container.appendChild(
-        createCard({
-          title: youtubeVideos[currentIndex].title,
-          thumbnail: youtubeVideos[currentIndex].thumbnail,
-          url: youtubeVideos[currentIndex].url,
-          badgeType: "trending"
-        })
-      );
-    }, 10000);
+      container.appendChild(createCard({
+        title: youtubeVideos[currentIndex].title,
+        thumbnail: youtubeVideos[currentIndex].thumbnail,
+        url: youtubeVideos[currentIndex].url,
+        badgeType: "trending"
+      }));
+    }, 10000); // rotate every 10 seconds
   } catch (err) {
     console.error(err);
     container.innerHTML = "<p>Error loading YouTube videos.</p>";
   }
 }
 
-// ===== Featured Clips =====
+/* ===== FEATURED CLIPS ===== */
 async function loadFeaturedClips() {
   const container = document.getElementById("featured-clips");
   if (!container) return;
@@ -126,8 +152,7 @@ async function loadFeaturedClips() {
     clips.forEach(clip => {
       const iframe = document.createElement("iframe");
       iframe.src = clip.embedUrl;
-      iframe.allow =
-        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
       iframe.allowFullscreen = true;
       container.appendChild(iframe);
     });
@@ -137,7 +162,7 @@ async function loadFeaturedClips() {
   }
 }
 
-// ===== Neon Particles =====
+/* ===== NEON PARTICLES ===== */
 function createParticles(count = 50) {
   const container = document.querySelector(".neon-particles");
   if (!container) return;
@@ -155,10 +180,164 @@ function createParticles(count = 50) {
   }
 }
 
-// ===== Initialize =====
+/* ===== INITIALIZE EVERYTHING ===== */
 window.addEventListener("DOMContentLoaded", () => {
+  loadAffiliateDeals();   // Affiliate rotation
   autoRefreshTwitch();    // Twitch auto-refresh
   rotateYouTube();        // YouTube carousel
   loadFeaturedClips();    // Featured clips
   createParticles(100);   // Neon particle effect
 });
+
+// ===== Affiliates Section =====
+async function loadAffiliates() {
+  const container = document.getElementById("affiliates-container");
+  if (!container) return;
+
+  try {
+    const res = await fetch("affiliates.json");
+    const affiliates = await res.json();
+    container.innerHTML = ""; // Clear container
+
+    affiliates.forEach(deal => {
+      const card = document.createElement("section");
+      card.classList.add("affiliate-card");
+
+      // Logo
+      const img = document.createElement("img");
+      img.src = deal.image;
+      img.alt = `${deal.name} Logo`;
+      img.style.maxWidth = "150px";
+      card.appendChild(img);
+
+      // Name
+      const h2 = document.createElement("h2");
+      h2.textContent = deal.name;
+      card.appendChild(h2);
+
+      // Description
+      const p = document.createElement("p");
+      p.textContent = deal.description;
+      card.appendChild(p);
+
+      // Banner
+      const banner = document.createElement("img");
+      banner.src = deal.banner;
+      banner.alt = `${deal.name} Banner`;
+      banner.classList.add("affiliate-banner");
+      card.appendChild(banner);
+
+      // Button
+      const btn = document.createElement("a");
+      btn.href = deal.link;
+      btn.target = "_blank";
+      btn.rel = "noopener noreferrer";
+      btn.classList.add("neon-btn");
+      btn.textContent = `Shop ${deal.name}`;
+      card.appendChild(btn);
+
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error("Error loading affiliates:", err);
+    container.innerHTML = "<p>Failed to load affiliate deals.</p>";
+  }
+}
+
+// Initialize affiliates on DOM load
+window.addEventListener("DOMContentLoaded", () => {
+  loadAffiliates();
+});
+
+// ===== Affiliates Section (Rotating Carousel with Fade) =====
+let affiliates = [];
+let currentAffiliateIndex = 0;
+
+async function loadAffiliatesCarousel(interval = 8000) {
+  const container = document.getElementById("affiliates-container");
+  if (!container) return;
+
+  try {
+    const res = await fetch("affiliates.json");
+    affiliates = await res.json();
+
+    if (affiliates.length === 0) return;
+
+    // Show the first affiliate
+    showAffiliate(container, affiliates[currentAffiliateIndex]);
+
+    // Rotate affiliates
+    setInterval(() => {
+      fadeOut(container, () => {
+        currentAffiliateIndex = (currentAffiliateIndex + 1) % affiliates.length;
+        showAffiliate(container, affiliates[currentAffiliateIndex]);
+        fadeIn(container);
+      });
+    }, interval);
+
+  } catch (err) {
+    console.error("Error loading affiliates:", err);
+    container.innerHTML = "<p>Failed to load affiliate deals.</p>";
+  }
+}
+
+function showAffiliate(container, deal) {
+  container.innerHTML = ""; // Clear previous card
+
+  const card = document.createElement("section");
+  card.classList.add("affiliate-card");
+
+  // Logo
+  const img = document.createElement("img");
+  img.src = deal.image;
+  img.alt = `${deal.name} Logo`;
+  img.style.maxWidth = "150px";
+  card.appendChild(img);
+
+  // Name
+  const h2 = document.createElement("h2");
+  h2.textContent = deal.name;
+  card.appendChild(h2);
+
+  // Description
+  const p = document.createElement("p");
+  p.textContent = deal.description;
+  card.appendChild(p);
+
+  // Banner
+  const banner = document.createElement("img");
+  banner.src = deal.banner;
+  banner.alt = `${deal.name} Banner`;
+  banner.classList.add("affiliate-banner");
+  card.appendChild(banner);
+
+  // Button
+  const btn = document.createElement("a");
+  btn.href = deal.link;
+  btn.target = "_blank";
+  btn.rel = "noopener noreferrer";
+  btn.classList.add("neon-btn");
+  btn.textContent = `Shop ${deal.name}`;
+  card.appendChild(btn);
+
+  container.appendChild(card);
+}
+
+// ===== Fade Helpers =====
+function fadeOut(element, callback) {
+  element.style.transition = "opacity 0.5s ease";
+  element.style.opacity = 0;
+  setTimeout(() => callback(), 500);
+}
+
+function fadeIn(element) {
+  element.style.transition = "opacity 0.5s ease";
+  element.style.opacity = 1;
+}
+
+// ===== Initialize =====
+window.addEv
+
+
+const res = await fetch("affiliates.json");
+const deals = await res.json();
