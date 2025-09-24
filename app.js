@@ -1,4 +1,4 @@
-const BACKEND_URL = ""; // Set your backend URL if needed
+const BACKEND_URL = "https://pulseplay-backend-ljyq.onrender.com";
 
 // ===== Helper Functions =====
 function createBadge(type) {
