@@ -1,123 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="PulsePlay: Live Twitch & YouTube Gaming Dashboard">
-  <title>PulsePlay - Gaming Hub</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <meta name="keywords" content="Gaming, Video Games, Gamers, Game Reviews, Twitch, YouTube Gaming, Esports, Gaming Gear, Gaming Deals, PulsePlay">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PulsePlay: Live Twitch & YouTube Gaming Dashboard">
+<title>PulsePlay - Gaming Hub</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
-    <!-- Place this directly below your <header> in index.html -->
+<body>
+
+<!-- Neon Background Grid & Floating Particles -->
+<div class="neon-bg-grid"></div>
+<div class="neon-particles"></div>
+
+<!-- Header -->
+<header>
+  <h1>⚡ PulsePlay</h1>
+  <p class="tagline">Your Gaming Universe • Streams • News • Esports</p>
+  <nav>
+    <a href="affiliates.html" class="nav-link neon-btn">Affiliate Page</a>
+  </nav>
+</header>
+
+<!-- Discord CTA -->
 <div class="discord-cta">
-  <a href="https://discord.gg/Zxm7wYXT" target="_blank" class="discord-btn">
+  <a href="https://discord.gg/Zxm7wYXT" target="_blank" class="discord-btn neon-btn">
     <img src="discord-icon.png" alt="Discord" class="discord-icon">
     ⚡ Join PulsePlay Discord
   </a>
 </div>
 
+<!-- Marquee -->
+<section class="marquee">
+  <p>🔥 Trending Now: Cyberpunk 2077 Patch 2.31 • VALORANT Champions Paris • GTA VI Teasers • Elden Ring DLC</p>
+</section>
 
-<body>
-  <!-- Header -->
-  <header>
-    <h1>⚡ PulsePlay</h1>
-    <p class="tagline">Your Gaming Universe • Streams • News • Esports</p>
-  </header>
+<!-- Featured Clips -->
+<section class="featured-video">
+  <h2>🎬 Featured Clips</h2>
+  <div id="featured-clips" class="video-grid"></div>
+</section>
 
-  <!-- Marquee -->
-  <section class="marquee">
-    <p>🔥 Trending Now: Cyberpunk 2077 Patch 2.31 • VALORANT Champions Paris • GTA VI Teasers • Elden Ring DLC</p>
-  </section>
+<!-- Main Content -->
+<main>
+  <h2>🎮 Twitch Live Now</h2>
+  <div id="twitch-container" class="cards-container"></div>
 
-  <!-- Main Content -->
-  <main>
-    <h2>🎮 Twitch Live Now</h2>
-    <div id="twitch-container" class="cards-container">
-      <!-- Neon pulse loader will show via JS initially -->
-    </div>
+  <h2>📺 YouTube Trending</h2>
+  <div id="youtube-container" class="cards-container"></div>
+</main>
 
-    <h2>📺 YouTube Trending</h2>
-    <div id="youtube-container" class="cards-container">
-      <!-- Neon pulse loader will show via JS initially -->
-    </div>
-  </main>
+<!-- Footer -->
+<footer>
+  <p>© 2025 PulsePlay. Built for Gamers ⚡</p>
+  <p>
+    <a href="https://discord.gg/Zxm7wYXT" target="_blank" class="discord-btn neon-btn">Join Our Discord</a>
+  </p>
+</footer>
 
-        <!-- ==================== Affiliate Deals & Reviews ==================== -->
-    <section class="affiliate-featured">
-      <h2>⭐ Featured Review</h2>
-      <div class="affiliate-card">
-        <img src="https://via.placeholder.com/300x200" alt="Gaming Headset">
-        <div class="affiliate-info">
-          <h3>Razer Kraken V3 Gaming Headset</h3>
-          <p>
-            The Razer Kraken V3 delivers immersive surround sound and crystal-clear mic quality. 
-            Perfect for both competitive and casual gamers.
-          </p>
-          <a href="YOUR_AFFILIATE_LINK" target="_blank" class="affiliate-btn">Buy on Amazon</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="affiliate-deals">
-      <h2>🔥 Latest Gaming Deals</h2>
-      <div class="affiliate-grid">
-        <div class="affiliate-card">
-          <img src="https://via.placeholder.com/300x200" alt="Gaming Mouse">
-          <h3>Logitech G502 Hero</h3>
-          <p>High-performance gaming mouse with customizable DPI and weights.</p>
-          <a href="YOUR_AFFILIATE_LINK" target="_blank" class="affiliate-btn">Get Deal</a>
-        </div>
-
-        <div class="affiliate-card">
-          <img src="https://via.placeholder.com/300x200" alt="Gaming Chair">
-          <h3>Secretlab Titan Evo</h3>
-          <p>Ergonomic comfort designed for marathon gaming sessions.</p>
-          <a href="YOUR_AFFILIATE_LINK" target="_blank" class="affiliate-btn">Get Deal</a>
-        </div>
-
-        <div class="affiliate-card">
-          <img src="https://via.placeholder.com/300x200" alt="Game Bundle">
-          <h3>Humble Bundle RPG Pack</h3>
-          <p>A massive pack of RPG classics at a fraction of the cost.</p>
-          <a href="YOUR_AFFILIATE_LINK" target="_blank" class="affiliate-btn">Get Bundle</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="affiliate-picks">
-      <h2>🏆 Top Picks for 2025</h2>
-      <ul>
-        <li>
-          <span>🎧 Best Budget Headset: HyperX Cloud Stinger</span>
-          <a href="YOUR_AFFILIATE_LINK" target="_blank">View Deal</a>
-        </li>
-        <li>
-          <span>⌨️ Best Mechanical Keyboard: SteelSeries Apex Pro</span>
-          <a href="YOUR_AFFILIATE_LINK" target="_blank">View Deal</a>
-        </li>
-        <li>
-          <span>🖱️ Best Mouse for FPS: Razer DeathAdder V2</span>
-          <a href="YOUR_AFFILIATE_LINK" target="_blank">View Deal</a>
-        </li>
-      </ul>
-    </section>
-    <!-- ================================================================ -->
-
-    <section class="affiliate-featured"></section>
-<section class="affiliate-latest"></section>
-<div class="affiliate-last-updated"></div>
-
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 PulsePlay. Built for Gamers ⚡</p>
-      <p><a href="YOUR_DISCORD_INVITE_LINK" target="_blank" class="discord-btn">Join Our Discord</a>
-</p>
-  </footer>
-
-  <!-- JS -->
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

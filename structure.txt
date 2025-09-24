@@ -1,0 +1,12 @@
+pulseplay/
+│
+├─ public/
+│   ├─ index.html
+│   ├─ styles.css
+│   ├─ app.js
+│   └─ discord-icon.png
+│
+├─ .env
+├─ server.js
+├─ package.json
+└─ package-lock.json

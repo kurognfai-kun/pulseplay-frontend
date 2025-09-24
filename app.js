@@ -1,191 +1,110 @@
-// Replace with your Render backend URL
-const BACKEND_URL = "https://pulseplay-backend.onrender.com";
+const BACKEND_URL = ""; // If using a backend, add your URL here
 
-// Show glowing loading cards
-function showLoadingCards(containerId, count = 3) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = "";
-  for (let i = 0; i < count; i++) {
-    const card = document.createElement("div");
-    card.className = "card loading-card";
-    card.innerHTML = `
-      <div class="loader-box"></div>
-      <h3>Loading...</h3>
-      <p>Fetching viewers...</p>
-      <div class="watch-btn">⚡</div>
-    `;
-    container.appendChild(card);
-  }
+// ===== Helper Functions =====
+function createBadge(type) {
+  const badge = document.createElement("span");
+  badge.classList.add("badge");
+  badge.textContent = type.toUpperCase();
+  if (type.toLowerCase() === "live") badge.classList.add("live");
+  if (type.toLowerCase() === "trending") badge.classList.add("trending");
+  return badge;
 }
 
-// Render cards
-function renderCards(containerId, cards) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = "";
-  cards.forEach(card => container.appendChild(card));
+function createCard(title, imgSrc, url, badgeType) {
+  const card = document.createElement("div");
+  card.classList.add("card");
+
+  const image = document.createElement("img");
+  image.src = imgSrc;
+  image.alt = title;
+
+  const h3 = document.createElement("h3");
+  h3.textContent = title;
+
+  const btn = document.createElement("a");
+  btn.href = url;
+  btn.target = "_blank";
+  btn.textContent = "Watch";
+  btn.classList.add("watch-btn", "neon-btn");
+
+  if (badgeType) card.appendChild(createBadge(badgeType));
+  card.appendChild(image);
+  card.appendChild(h3);
+  card.appendChild(btn);
+
+  return card;
 }
 
-// Fetch Twitch
+// ===== Twitch Section =====
 async function loadTwitch() {
-  showLoadingCards("twitch-container", 5);
+  const container = document.getElementById("twitch-container");
+  container.innerHTML = ""; // Clear loader
   try {
     const res = await fetch(`${BACKEND_URL}/api/twitch`);
     const data = await res.json();
 
-    const cards = data.data.map(stream => {
-      const card = document.createElement("div");
-      card.className = "card";
-
-      const imgUrl = stream.box_art_url.replace("{width}", "320").replace("{height}", "180");
-      const twitchLink = `https://www.twitch.tv/${stream.user_login}`;
-
-      card.innerHTML = `
-        <div class="badge live">LIVE</div>
-        <img src="${imgUrl}" alt="${stream.name}">
-        <h3>${stream.user_name}</h3>
-        <p>Game: ${stream.name}</p>
-        <p>Title: ${stream.title}</p>
-        <p>Viewers: ${stream.viewer_count.toLocaleString()}</p>
-        <a href="${twitchLink}" target="_blank" rel="noopener noreferrer" class="watch-btn">⚡ Watch Now</a>
-      `;
-      return card;
+    data.streams.forEach(stream => {
+      const card = createCard(
+        stream.title,
+        stream.thumbnail_url.replace("{width}x{height}", "320x180"),
+        `https://twitch.tv/${stream.user_name}`,
+        "live"
+      );
+      container.appendChild(card);
     });
-
-    renderCards("twitch-container", cards);
   } catch (err) {
-    console.error("Error loading Twitch:", err);
+    container.innerHTML = "<p>Failed to load Twitch streams.</p>";
+    console.error(err);
   }
 }
 
-// Fetch YouTube
+// ===== YouTube Section =====
 async function loadYouTube() {
-  showLoadingCards("youtube-container", 5);
+  const container = document.getElementById("youtube-container");
+  container.innerHTML = ""; // Clear loader
   try {
     const res = await fetch(`${BACKEND_URL}/api/youtube`);
     const data = await res.json();
 
-    const cards = data.items.map(video => {
-      const card = document.createElement("div");
-      card.className = "card";
-
-      const thumbnail = video.snippet.thumbnails.medium.url;
-      const title = video.snippet.title;
-      const channel = video.snippet.channelTitle;
-      const views = video.statistics ? Number(video.statistics.viewCount).toLocaleString() : "N/A";
-      const publishDate = new Date(video.snippet.publishedAt).toLocaleDateString();
-      const videoLink = `https://www.youtube.com/watch?v=${video.id}`;
-
-      card.innerHTML = `
-        <div class="badge trending">TRENDING</div>
-        <img src="${thumbnail}" alt="${title}">
-        <h3>${title}</h3>
-        <p>Channel: ${channel}</p>
-        <p>Views: ${views}</p>
-        <p>Published: ${publishDate}</p>
-        <p class="description">${video.snippet.description.slice(0, 80)}...</p>
-        <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="watch-btn">⚡ Watch Now</a>
-      `;
-      return card;
+    data.videos.forEach(video => {
+      const card = createCard(
+        video.title,
+        video.thumbnail,
+        `https://www.youtube.com/watch?v=${video.id}`,
+        "trending"
+      );
+      container.appendChild(card);
     });
-
-    renderCards("youtube-container", cards);
   } catch (err) {
-    console.error("Error loading YouTube:", err);
+    container.innerHTML = "<p>Failed to load YouTube videos.</p>";
+    console.error(err);
   }
 }
 
-// Initial load
-loadTwitch();
-loadYouTube();
+// ===== Featured Clips Section =====
+async function loadFeaturedClips() {
+  const container = document.getElementById("featured-clips");
+  container.innerHTML = "";
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/featured`);
+    const clips = await res.json();
 
-// Auto-refresh every 60 seconds
-setInterval(() => {
-  console.log("🔄 Refreshing Twitch & YouTube data...");
+    clips.forEach(clip => {
+      const iframe = document.createElement("iframe");
+      iframe.src = clip.embedUrl;
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      iframe.allowFullscreen = true;
+      container.appendChild(iframe);
+    });
+  } catch (err) {
+    container.innerHTML = "<p>Failed to load featured clips.</p>";
+    console.error(err);
+  }
+}
+
+// ===== Initialize =====
+document.addEventListener("DOMContentLoaded", () => {
   loadTwitch();
   loadYouTube();
-}, 60000);
-
-// Get current two-week period index
-function getBiWeeklyIndex(productsLength) {
-  const start = new Date("2025-01-01");
-  const now = new Date();
-  const diffDays = Math.floor((now - start) / (1000 * 60 * 60 * 24));
-  return Math.floor(diffDays / 14) % productsLength;
-}
-
-// Render Featured Product (1)
-function renderFeaturedProduct(products) {
-  const idx = getBiWeeklyIndex(products.length);
-  const product = products[idx];
-  const container = document.querySelector(".affiliate-featured");
-  if (!container) return;
-
-  container.innerHTML = `
-    <h2>⭐ Featured Review</h2>
-    <div class="affiliate-card">
-      <img src="${product.img}" alt="${product.title}">
-      <div class="affiliate-info">
-        <h3>${product.title}</h3>
-        <p>${product.desc}</p>
-        <a href="${product.link}" target="_blank" class="affiliate-btn">View Deal</a>
-      </div>
-    </div>
-  `;
-}
-
-// Render Latest Deals (3)
-function renderLatestDeals(products) {
-  const idx = getBiWeeklyIndex(products.length);
-  const container = document.querySelector(".affiliate-latest");
-  if (!container) return;
-
-  let cards = "";
-  for (let i = 0; i < 3; i++) {
-    const product = products[(idx + i) % products.length];
-    cards += `
-      <div class="affiliate-card">
-        <img src="${product.img}" alt="${product.title}">
-        <div class="affiliate-info">
-          <h3>${product.title}</h3>
-          <p>${product.desc}</p>
-          <a href="${product.link}" target="_blank" class="affiliate-btn">Shop Now</a>
-        </div>
-      </div>
-    `;
-  }
-
-  container.innerHTML = `<h2>🔥 Latest Deals</h2><div class="affiliate-grid">${cards}</div>`;
-}
-
-// Render "Last Updated" (auto today)
-function renderLastUpdated() {
-  const container = document.querySelector(".affiliate-last-updated");
-  if (!container) return;
-
-  const today = new Date();
-  const formatted = today.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-
-  container.innerHTML = `<p class="last-updated">🔄 Deals last refreshed: <strong>${formatted}</strong></p>`;
-}
-
-// Fetch JSON and render everything
-async function loadAffiliateProducts() {
-  try {
-    const cacheBuster = `?v=${new Date().getTime()}`;
-    const res = await fetch("products.json" + cacheBuster, { cache: "no-store" });
-    if (!res.ok) throw new Error("Failed to fetch products.json");
-
-    const products = await res.json();
-    renderFeaturedProduct(products);
-    renderLatestDeals(products);
-    renderLastUpdated();
-  } catch (err) {
-    console.error("Error loading affiliate products:", err);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", loadAffiliateProducts);
+  loadFeaturedClips();
+});
