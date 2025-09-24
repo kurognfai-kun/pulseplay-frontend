@@ -1,0 +1,30 @@
+[
+  {
+    "name": "PlayStation Direct",
+    "description": "Shop official PlayStation consoles, games, and accessories directly from Sony.",
+    "image": "image/PSLogo.png",
+    "banner": "https://media.direct.playstation.com/is/image/sierialto/PS5-Digital30-Hero-1?$Background_Large$",
+    "link": "YOUR_PLAYSTATION_AFFILIATE_LINK"
+  },
+  {
+    "name": "Sony Gear",
+    "description": "Find the best Sony gaming headsets, DualSense controllers, and more.",
+    "image": "image/sonylogo.png",
+    "banner": "https://media.direct.playstation.com/is/image/sierialto/Elite-Hero-1-new?$Background_Large$",
+    "link": "YOUR_SONY_AFFILIATE_LINK"
+  },
+  {
+    "name": "Xbox Store",
+    "description": "Get Xbox consoles, accessories, and the latest games at the official Xbox Store.",
+    "image": "image/xboxlogo.png",
+    "banner": "https://compass-ssl.xbox.com/assets/45/70/4570c6aa-93f2-4c7b-92f5-64e1261e8c87.jpg?n=Xbox-Series-X_Hero-1084_1920x1080.jpg",
+    "link": "YOUR_XBOX_AFFILIATE_LINK"
+  },
+  {
+    "name": "Nintendo Store",
+    "description": "Shop Nintendo Switch consoles, games, and accessories directly from Nintendo.",
+    "image": "image/nintendologo.png",
+    "banner": "https://www.nintendo.com/content/dam/noa/en_US/hardware/switch/nintendo-switch-new-packaging.jpg",
+    "link": "YOUR_NINTENDO_AFFILIATE_LINK"
+  }
+]
