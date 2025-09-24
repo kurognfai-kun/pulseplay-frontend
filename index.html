@@ -1,64 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="PulsePlay: Live Twitch & YouTube Gaming Dashboard">
-<title>PulsePlay - Gaming Hub</title>
-<link rel="stylesheet" href="styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PulsePlay: Live Twitch & YouTube Gaming Dashboard for gamers, streams, news, and esports.">
+  <meta name="keywords" content="Gaming, Twitch, YouTube, Esports, PulsePlay, Live Streams, Gaming News">
+  <meta name="author" content="PulsePlay Team">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <title>PulsePlay - Gaming Hub</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- Neon Background Grid & Floating Particles -->
-<div class="neon-bg-grid"></div>
-<div class="neon-particles"></div>
+  <!-- Neon Background Grid & Floating Particles -->
+  <div class="neon-bg-grid" aria-hidden="true"></div>
+  <div class="neon-particles" aria-hidden="true"></div>
 
-<!-- Header -->
-<header>
-  <h1>⚡ PulsePlay</h1>
-  <p class="tagline">Your Gaming Universe • Streams • News • Esports</p>
-  <nav>
-    <a href="affiliates.html" class="nav-link neon-btn">Affiliate Page</a>
-  </nav>
-</header>
+  <!-- Header -->
+  <header>
+    <h1>⚡ PulsePlay</h1>
+    <p class="tagline">Your Gaming Universe • Streams • News • Esports</p>
+    <nav aria-label="Main Navigation">
+      <a href="affiliates.html" class="nav-link neon-btn" rel="noopener noreferrer">Affiliate Page</a>
+    </nav>
+  </header>
 
-<!-- Discord CTA -->
-<div class="discord-cta">
-  <a href="https://discord.gg/Zxm7wYXT" target="_blank" class="discord-btn neon-btn">
-    <img src="discord-icon.png" alt="Discord" class="discord-icon">
-    ⚡ Join PulsePlay Discord
-  </a>
-</div>
+  <!-- Discord CTA -->
+  <section class="discord-cta" aria-label="Discord Call to Action">
+    <a href="https://discord.gg/Zxm7wYXT" target="_blank" rel="noopener noreferrer" class="discord-btn neon-btn">
+      <img src="discord-icon.png" alt="Discord Logo" class="discord-icon">
+      ⚡ Join PulsePlay Discord
+    </a>
+  </section>
 
-<!-- Marquee -->
-<section class="marquee">
-  <p>🔥 Trending Now: Cyberpunk 2077 Patch 2.31 • VALORANT Champions Paris • GTA VI Teasers • Elden Ring DLC</p>
-</section>
+  <!-- Marquee -->
+  <section class="marquee" aria-label="Trending Now">
+    <p>🔥 Trending Now: Cyberpunk 2077 Patch 2.31 • VALORANT Champions Paris • GTA VI Teasers • Elden Ring DLC</p>
+  </section>
 
-<!-- Featured Clips -->
-<section class="featured-video">
-  <h2>🎬 Featured Clips</h2>
-  <div id="featured-clips" class="video-grid"></div>
-</section>
+  <!-- Featured Clips -->
+  <section class="featured-video">
+    <h2>🎬 Featured Clips</h2>
+    <div id="featured-clips" class="video-grid" role="region" aria-label="Featured Video Clips"></div>
+  </section>
 
-<!-- Main Content -->
-<main>
-  <h2>🎮 Twitch Live Now</h2>
-  <div id="twitch-container" class="cards-container"></div>
+  <!-- Main Content -->
+  <main>
+    <section aria-label="Twitch Live Streams">
+      <h2>🎮 Twitch Live Now</h2>
+      <div id="twitch-container" class="cards-container"></div>
+    </section>
 
-  <h2>📺 YouTube Trending</h2>
-  <div id="youtube-container" class="cards-container"></div>
-</main>
+    <section aria-label="YouTube Trending Videos">
+      <h2>📺 YouTube Trending</h2>
+      <div id="youtube-container" class="cards-container"></div>
+    </section>
+  </main>
 
-<!-- Footer -->
-<footer>
-  <p>© 2025 PulsePlay. Built for Gamers ⚡</p>
-  <p>
-    <a href="https://discord.gg/Zxm7wYXT" target="_blank" class="discord-btn neon-btn">Join Our Discord</a>
-  </p>
-</footer>
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 PulsePlay. Built for Gamers ⚡</p>
+    <p>
+      <a href="https://discord.gg/Zxm7wYXT" target="_blank" rel="noopener noreferrer" class="discord-btn neon-btn">Join Our Discord</a>
+    </p>
+  </footer>
 
-<script src="app.js"></script>
+  <!-- Scripts -->
+  <script src="app.js" defer></script>
+
 </body>
 </html>

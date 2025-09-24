@@ -89,7 +89,10 @@ h1 {
 }
 
 /* ===== Main & Cards ===== */
-main { padding: 2rem; }
+main {
+  padding: 2rem;
+}
+
 h2 {
   color: #00fff7;
   margin-bottom: 1rem;
@@ -157,23 +160,7 @@ h2 {
   box-shadow: 0 0 6px #00fff7, 0 0 12px #00b3b3;
 }
 
-/* ===== Loader ===== */
-.loading-card {
-  border: 2px solid #00fff7;
-  background: rgba(0,0,0,0.2);
-  box-shadow: 0 0 20px #00fff7 inset;
-  animation: neonPulse 1.5s infinite alternate;
-}
-
-.loader-box {
-  width: 100%;
-  height: 140px;
-  background: linear-gradient(90deg, #00fff7, #00b3b3, #00fff7);
-  border-radius: 8px;
-  animation: pulseGradient 1.2s infinite;
-}
-
-/* ===== Featured Videos / Grid ===== */
+/* Featured Videos / Grid */
 .video-grid {
   display: flex;
   flex-wrap: wrap;
@@ -197,7 +184,7 @@ h2 {
   text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7, 0 0 20px #00fff7;
 }
 
-/* ===== Neon Background Grid & Particles ===== */
+/* Neon Background Grid & Particles */
 .neon-bg-grid {
   position: fixed;
   top: 0; left: 0;
@@ -218,7 +205,17 @@ h2 {
   z-index: -1;
 }
 
-/* ===== Footer ===== */
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #0ff;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: float 5s linear infinite;
+}
+
+/* Footer */
 footer {
   text-align: center;
   padding: 1.5rem;
@@ -255,6 +252,42 @@ footer {
   0% { background-position: 0 0, 0 0; }
   100% { background-position: 50px 50px, 50px 50px; }
 }
+
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+}
+
+/* ===== Twitch / YouTube Live Cards ===== */
+.card.live {
+  border-color: #ff0055;
+  box-shadow: 0 0 15px #ff0055, 0 0 30px #ff0055 inset;
+}
+
+.card.live:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px #ff0055, 0 0 50px #ff0055 inset;
+}
+
+.card.youtube:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00aaff, 0 0 30px #00aaff inset;
+}
+
+.card .live-badge {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: #ff0055;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* ===== Affiliates ===== */
 .affiliates {
   max-width: 800px;
   margin: auto;
@@ -263,67 +296,6 @@ footer {
   color: #fff;
 }
 
-.affiliate-card {
-  background: #111;
-  border: 2px solid #0ff;
-  border-radius: 15px;
-  padding: 1.5rem;
-  margin: 2rem 0;
-  box-shadow: 0 0 20px rgba(0,255,255,0.3);
-}
-
-.affiliate-card img {
-  max-width: 200px;
-  margin-bottom: 1rem;
-}
-
-.neon-btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  color: #0ff;
-  border: 2px solid #0ff;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-.neon-btn:hover {
-  background: #0ff;
-  color: #000;
-  box-shadow: 0 0 20px #0ff;
-}
-.affiliate-banner-section {
-  text-align: center;
-  margin: 2rem auto;
-}
-
-.affiliate-banner-hero {
-  max-width: 100%;
-  border-radius: 15px;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-}
-/* ===== Affiliate Banner ===== */
-.affiliate-banner-section {
-  text-align: center;
-  margin: 2rem auto;
-  padding: 1rem;
-}
-
-.affiliate-banner-hero {
-  max-width: 100%;
-  height: auto;
-  border-radius: 20px;
-  box-shadow: 0 0 35px rgba(0, 255, 255, 0.7), 
-              0 0 60px rgba(255, 0, 255, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.affiliate-banner-hero:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 45px rgba(0, 255, 255, 0.9), 
-              0 0 70px rgba(255, 0, 255, 0.6);
-}
-/* ===== Affiliate Cards ===== */
 .affiliate-card {
   background: #0a0a0f;
   border-radius: 20px;
@@ -356,19 +328,6 @@ footer {
   margin-bottom: 1rem;
 }
 
-.affiliate-card .affiliate-banner {
-  margin: 1rem 0;
-  border-radius: 15px;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-}
-
-.affiliate-card:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 0 35px rgba(0, 255, 255, 0.7),
-              0 0 55px rgba(255, 0, 255, 0.4);
-}
-
-/* Buttons inside affiliate cards */
 .affiliate-card .neon-btn {
   display: inline-block;
   margin-top: 1rem;

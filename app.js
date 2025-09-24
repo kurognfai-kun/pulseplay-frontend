@@ -1,4 +1,4 @@
-const BACKEND_URL = ""; // If using a backend, add your URL here
+const BACKEND_URL = ""; // Set your backend URL if needed
 
 // ===== Helper Functions =====
 function createBadge(type) {
@@ -10,81 +10,115 @@ function createBadge(type) {
   return badge;
 }
 
-function createCard(title, imgSrc, url, badgeType) {
+function createCard({ title, thumbnail, url, live = false, badgeType }) {
   const card = document.createElement("div");
   card.classList.add("card");
+  if (live) card.classList.add("live");
+
+  if (badgeType) card.appendChild(createBadge(badgeType));
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.target = "_blank";
 
   const image = document.createElement("img");
-  image.src = imgSrc;
+  image.src = thumbnail;
   image.alt = title;
+  image.classList.add("card-img");
 
   const h3 = document.createElement("h3");
   h3.textContent = title;
+  h3.classList.add("card-title");
 
-  const btn = document.createElement("a");
-  btn.href = url;
-  btn.target = "_blank";
-  btn.textContent = "Watch";
-  btn.classList.add("watch-btn", "neon-btn");
-
-  if (badgeType) card.appendChild(createBadge(badgeType));
-  card.appendChild(image);
-  card.appendChild(h3);
-  card.appendChild(btn);
+  link.appendChild(image);
+  link.appendChild(h3);
+  card.appendChild(link);
 
   return card;
 }
 
-// ===== Twitch Section =====
+// ===== Twitch =====
 async function loadTwitch() {
   const container = document.getElementById("twitch-container");
-  container.innerHTML = ""; // Clear loader
+  if (!container) return;
+  container.innerHTML = "<p>Loading Twitch streams...</p>";
+
   try {
     const res = await fetch(`${BACKEND_URL}/api/twitch`);
-    const data = await res.json();
+    const streams = await res.json();
+    container.innerHTML = "";
 
-    data.streams.forEach(stream => {
-      const card = createCard(
-        stream.title,
-        stream.thumbnail_url.replace("{width}x{height}", "320x180"),
-        `https://twitch.tv/${stream.user_name}`,
-        "live"
-      );
+    streams.forEach(stream => {
+      const card = createCard({
+        title: `${stream.name} • ${stream.game}`,
+        thumbnail: stream.thumbnail,
+        url: stream.url,
+        live: true,
+        badgeType: "live"
+      });
       container.appendChild(card);
     });
   } catch (err) {
-    container.innerHTML = "<p>Failed to load Twitch streams.</p>";
     console.error(err);
+    container.innerHTML = "<p>Error loading Twitch streams.</p>";
   }
 }
 
-// ===== YouTube Section =====
-async function loadYouTube() {
+// Auto-refresh Twitch every 60s
+function autoRefreshTwitch(interval = 60000) {
+  loadTwitch(); // Initial load
+  setInterval(loadTwitch, interval);
+}
+
+// ===== YouTube =====
+let youtubeVideos = [];
+let currentIndex = 0;
+
+async function rotateYouTube() {
   const container = document.getElementById("youtube-container");
-  container.innerHTML = ""; // Clear loader
+  if (!container) return;
+
   try {
     const res = await fetch(`${BACKEND_URL}/api/youtube`);
-    const data = await res.json();
+    youtubeVideos = await res.json();
+    if (youtubeVideos.length === 0) return;
 
-    data.videos.forEach(video => {
-      const card = createCard(
-        video.title,
-        video.thumbnail,
-        `https://www.youtube.com/watch?v=${video.id}`,
-        "trending"
+    // Show first video
+    container.innerHTML = "";
+    container.appendChild(
+      createCard({
+        title: youtubeVideos[0].title,
+        thumbnail: youtubeVideos[0].thumbnail,
+        url: youtubeVideos[0].url,
+        badgeType: "trending"
+      })
+    );
+
+    // Rotate every 10 seconds
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % youtubeVideos.length;
+      container.innerHTML = "";
+      container.appendChild(
+        createCard({
+          title: youtubeVideos[currentIndex].title,
+          thumbnail: youtubeVideos[currentIndex].thumbnail,
+          url: youtubeVideos[currentIndex].url,
+          badgeType: "trending"
+        })
       );
-      container.appendChild(card);
-    });
+    }, 10000);
   } catch (err) {
-    container.innerHTML = "<p>Failed to load YouTube videos.</p>";
     console.error(err);
+    container.innerHTML = "<p>Error loading YouTube videos.</p>";
   }
 }
 
-// ===== Featured Clips Section =====
+// ===== Featured Clips =====
 async function loadFeaturedClips() {
   const container = document.getElementById("featured-clips");
+  if (!container) return;
   container.innerHTML = "";
+
   try {
     const res = await fetch(`${BACKEND_URL}/api/featured`);
     const clips = await res.json();
@@ -92,28 +126,39 @@ async function loadFeaturedClips() {
     clips.forEach(clip => {
       const iframe = document.createElement("iframe");
       iframe.src = clip.embedUrl;
-      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
       iframe.allowFullscreen = true;
       container.appendChild(iframe);
     });
   } catch (err) {
-    container.innerHTML = "<p>Failed to load featured clips.</p>";
     console.error(err);
+    container.innerHTML = "<p>Failed to load featured clips.</p>";
+  }
+}
+
+// ===== Neon Particles =====
+function createParticles(count = 50) {
+  const container = document.querySelector(".neon-particles");
+  if (!container) return;
+
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement("div");
+    particle.className = "particle";
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.animationDuration = `${3 + Math.random() * 4}s`;
+    const size = 2 + Math.random() * 3;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    container.appendChild(particle);
   }
 }
 
 // ===== Initialize =====
-document.addEventListener("DOMContentLoaded", () => {
-  loadTwitch();
-  loadYouTube();
-  loadFeaturedClips();
+window.addEventListener("DOMContentLoaded", () => {
+  autoRefreshTwitch();    // Twitch auto-refresh
+  rotateYouTube();        // YouTube carousel
+  loadFeaturedClips();    // Featured clips
+  createParticles(100);   // Neon particle effect
 });
-
-// app.js
-async function getData() {
-  const res = await fetch("https://api.example.com");
-  const data = await res.json();
-  console.log(data);
-}
-
-getData();

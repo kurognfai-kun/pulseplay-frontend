@@ -1,12 +1,7 @@
-pulseplay/
-│
+pulseplay-backend/
 ├─ public/
-│   ├─ index.html
-│   ├─ styles.css
-│   ├─ app.js
-│   └─ discord-icon.png
-│
-├─ .env
+│   └─ index.html        # your frontend files (HTML/CSS/JS/images)
 ├─ server.js
 ├─ package.json
-└─ package-lock.json
+└─ .env                 # your API keys and environment variables
+
