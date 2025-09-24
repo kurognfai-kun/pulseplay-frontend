@@ -108,3 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
   loadYouTube();
   loadFeaturedClips();
 });
+
+// app.js
+async function getData() {
+  const res = await fetch("https://api.example.com");
+  const data = await res.json();
+  console.log(data);
+}
+
+getData();
