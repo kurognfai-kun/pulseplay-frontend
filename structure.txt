@@ -1,7 +1,20 @@
-pulseplay-backend/
-├─ public/
-│   └─ index.html        # your frontend files (HTML/CSS/JS/images)
-├─ server.js
-├─ package.json
-└─ .env                 # your API keys and environment variables
-
+/project-root
+│
+├── package.json          <-- Node backend config
+├── server.js             <-- Express server
+├── .env                  <-- API keys (Twitch, YouTube)
+│
+├── /public               <-- All frontend files served statically
+│   ├── index.html        <-- Main homepage
+│   ├── affiliates.html   <-- Affiliate page
+│   ├── styles.css        <-- Main CSS
+│   ├── app.js            <-- JS for Twitch, YouTube, featured clips, particles
+│   ├── favicon.ico       <-- Site icon
+│   │
+│   └── /images           <-- All images used in pages
+│       ├── PSLogo.png
+│       ├── sonylogo.png
+│       ├── discord-icon.png
+│       └── any other banners...
+│
+└── /node_modules         <-- Installed npm packages

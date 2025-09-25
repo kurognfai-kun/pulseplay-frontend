@@ -195,59 +195,65 @@ async function loadAffiliates() {
   if (!container) return;
 
   try {
-    const res = await fetch("affiliates.json");
-    const affiliates = await res.json();
-    container.innerHTML = ""; // Clear container
+    const res = await fetch("affiliates.json"); // JSON file containing all items
+    const data = await res.json();
+    container.innerHTML = ""; // clear existing
 
-    affiliates.forEach(deal => {
+    // Flatten nested arrays if needed
+    const allAffiliates = data.flat();
+
+    allAffiliates.forEach(item => {
       const card = document.createElement("section");
       card.classList.add("affiliate-card");
 
-      // Logo
+      // Image (product or brand logo)
       const img = document.createElement("img");
-      img.src = deal.image;
-      img.alt = `${deal.name} Logo`;
+      img.src = item.img || item.image;
+      img.alt = item.title || item.name;
       img.style.maxWidth = "150px";
       card.appendChild(img);
 
-      // Name
+      // Name / Title
       const h2 = document.createElement("h2");
-      h2.textContent = deal.name;
+      h2.textContent = item.title || item.name;
       card.appendChild(h2);
 
       // Description
       const p = document.createElement("p");
-      p.textContent = deal.description;
+      p.textContent = item.desc || item.description;
       card.appendChild(p);
 
-      // Banner
-      const banner = document.createElement("img");
-      banner.src = deal.banner;
-      banner.alt = `${deal.name} Banner`;
-      banner.classList.add("affiliate-banner");
-      card.appendChild(banner);
+      // Banner (optional)
+      if (item.banner) {
+        const banner = document.createElement("img");
+        banner.src = item.banner;
+        banner.alt = `${item.title || item.name} Banner`;
+        banner.classList.add("affiliate-banner");
+        card.appendChild(banner);
+      }
 
-      // Button
+      // Link / button
       const btn = document.createElement("a");
-      btn.href = deal.link;
+      btn.href = item.link;
       btn.target = "_blank";
       btn.rel = "noopener noreferrer";
       btn.classList.add("neon-btn");
-      btn.textContent = `Shop ${deal.name}`;
+      btn.textContent = `Shop ${item.title || item.name}`;
       card.appendChild(btn);
 
       container.appendChild(card);
     });
   } catch (err) {
     console.error("Error loading affiliates:", err);
-    container.innerHTML = "<p>Failed to load affiliate deals.</p>";
+    container.innerHTML = "<p>Failed to load affiliate items.</p>";
   }
 }
 
-// Initialize affiliates on DOM load
+// ===== Initialize =====
 window.addEventListener("DOMContentLoaded", () => {
   loadAffiliates();
 });
+
 
 // ===== Affiliates Section (Rotating Carousel with Fade) =====
 let affiliates = [];
@@ -341,3 +347,84 @@ window.addEv
 
 const res = await fetch("affiliates.json");
 const deals = await res.json();
+
+// ===== Affiliates Section with Carousel =====
+let affiliates = [];
+let affiliateIndex = 0;
+
+async function loadAffiliatesCarousel(interval = 8000) {
+  const container = document.getElementById("affiliates-container");
+  if (!container) return;
+
+  try {
+    const res = await fetch("affiliates.json"); // JSON file containing all items
+    const data = await res.json();
+
+    // Flatten nested arrays if needed
+    affiliates = data.flat();
+    if (affiliates.length === 0) return;
+
+    // Show first card
+    container.innerHTML = "";
+    container.appendChild(createAffiliateCard(affiliates[0]));
+
+    // Rotate cards automatically
+    setInterval(() => {
+      affiliateIndex = (affiliateIndex + 1) % affiliates.length;
+      container.innerHTML = "";
+      container.appendChild(createAffiliateCard(affiliates[affiliateIndex]));
+    }, interval);
+
+  } catch (err) {
+    console.error("Error loading affiliates:", err);
+    container.innerHTML = "<p>Failed to load affiliate items.</p>";
+  }
+}
+
+// ===== Helper: Create Single Affiliate Card =====
+function createAffiliateCard(item) {
+  const card = document.createElement("section");
+  card.classList.add("affiliate-card");
+
+  // Image (product or brand logo)
+  const img = document.createElement("img");
+  img.src = item.img || item.image;
+  img.alt = item.title || item.name;
+  img.style.maxWidth = "150px";
+  card.appendChild(img);
+
+  // Name / Title
+  const h2 = document.createElement("h2");
+  h2.textContent = item.title || item.name;
+  card.appendChild(h2);
+
+  // Description
+  const p = document.createElement("p");
+  p.textContent = item.desc || item.description;
+  card.appendChild(p);
+
+  // Banner (optional)
+  if (item.banner) {
+    const banner = document.createElement("img");
+    banner.src = item.banner;
+    banner.alt = `${item.title || item.name} Banner`;
+    banner.classList.add("affiliate-banner");
+    card.appendChild(banner);
+  }
+
+  // Shop button
+  const btn = document.createElement("a");
+  btn.href = item.link;
+  btn.target = "_blank";
+  btn.rel = "noopener noreferrer";
+  btn.classList.add("neon-btn");
+  btn.textContent = `Shop ${item.title || item.name}`;
+  card.appendChild(btn);
+
+  return card;
+}
+
+// ===== Initialize =====
+window.addEventListener("DOMContentLoaded", () => {
+  loadAffiliatesCarousel(10000); // rotate every 10 seconds
+});
