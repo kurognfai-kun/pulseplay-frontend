@@ -374,3 +374,165 @@ footer {
   max-width: 100%;
   margin: 1rem 0;
 }
+/* ===== Affiliate Cards ===== */
+.affiliate-card {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #00fff7; /* neon border */
+  border-radius: 16px;
+  padding: 16px;
+  margin: 16px;
+  width: 280px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  box-shadow: 0 0 10px #00fff7, 0 0 20px #ff00ff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.affiliate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px #00fff7, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
+}
+
+.affiliate-card img.affiliate-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #00fff7;
+  box-shadow: 0 0 10px #00fff7;
+}
+
+.affiliate-card h3 {
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  margin: 8px 0;
+  text-shadow: 0 0 5px #00fff7, 0 0 10px #ff00ff;
+}
+
+.affiliate-card p {
+  color: #d0d0d0;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.affiliate-card .neon-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #00fff7;
+  border: 2px solid #00fff7;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00fff7;
+  box-shadow: 0 0 5px #00fff7, 0 0 10px #ff00ff;
+  transition: all 0.2s;
+}
+
+.affiliate-card .neon-btn:hover {
+  color: #fff;
+  background: #00fff7;
+  box-shadow: 0 0 20px #00fff7, 0 0 30px #ff00ff;
+}
+/* ===== Affiliates Container Grid ===== */
+#affiliates-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Make sure the section looks good on smaller screens */
+.affiliates {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+/* ==========================
+   Affiliate Page Styles
+========================== */
+
+/* Container for all cards */
+.cards-container,
+#affiliates-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Individual Card */
+.card {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #0ff;
+  border-radius: 12px;
+  padding: 15px;
+  max-width: 300px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #0ff, 0 0 30px #0ff inset;
+}
+
+/* Card Images */
+.card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Card Titles */
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff;
+}
+
+/* Card Descriptions */
+.card p {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  color: #ccc;
+}
+
+/* Affiliate Banners (larger image for brands) */
+.affiliate-banner {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #0ff;
+}
+
+/* Neon Button */
+.neon-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #0ff;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  box-shadow: 0 0 5px #0ff, 0 0 10px #0ff inset;
+  transition: all 0.3s ease-in-out;
+}
+
+.neon-btn:hover {
+  color: #fff;
+  background: #0ff;
+  box-shadow: 0 0 15px #0ff, 0 0 30px #0ff inset;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    max-width: 90%;
+  }
+}
